@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 
 def index(request):
@@ -12,7 +13,9 @@ def categories(request, cat_id):
 
 def year_archive(request, year):
     if year > 2024:
-        raise Http404()
+        # raise Http404()
+        uri = reverse('categories_slug', args=['year'])
+        return redirect(uri)
     return HttpResponse(f"<h1>Статьи по категориям</h1> Год {year}")
 
 

@@ -4,8 +4,8 @@ from women import views, converters
 register_converter(converters.FourDigitYearConverter, "yyyy")
 
 urlpatterns = [
-    path('', views.index),
-    path('cats/<int:cat_id>', views.categories),
-    path('cats/<slug:cat_slug>', views.categories_slug),
-    path("articles/<yyyy:year>/", views.year_archive),
+    path('', views.index, name='home'),
+    path('cats/<int:cat_id>', views.categories, name='categories_id'),
+    path('cats/<slug:cat_slug>', views.categories_slug, name='categories_slug'),
+    path("archive/<yyyy:year>/", views.year_archive, name='year_archive'),
 ]
