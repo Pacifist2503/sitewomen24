@@ -5,8 +5,9 @@
     <title>{{ title }}</title>
 </head>
 <body>
-{{ menu }}
+It is {% now "jS F Y H:i" %}
+<p>{{ menu|first }}</p>
 <h1>{{ title }}</h1>
-
+{% lorem 10 p random %}
 </body>
 </html>
