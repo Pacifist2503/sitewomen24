@@ -6,8 +6,24 @@
 </head>
 <body>
 It is {% now "jS F Y H:i" %}
-<p>{{ menu|first }}</p>
+<p>{{ menu|join:" | " }}</p>
 <h1>{{ title }}</h1>
-{% lorem 10 p random %}
+
+{% for p in posts %}
+    <ul>
+        {% if p.is_published %}
+            <li nonce="gfbcfg">
+                <p>{{ p.title }}</p>
+                <p>{{ p.content }}</p>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            </li>
+        {% endif %}
+    </ul>
+
+
+{% endfor %}
+
 </body>
 </html>
