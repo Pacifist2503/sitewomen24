@@ -2,7 +2,11 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+menu = [{'title': 'О сайте', 'url': 'about'},
+        {'title': 'Добавить статью', 'url': 'add_page'},
+        {'title': 'Обратная связь', 'url': 'contact'},
+        {'title': 'Войти', 'url': 'login'},
+        ]
 
 data_db = [
     {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
@@ -26,20 +30,20 @@ def about(request):
     return render(request, 'women/about.html', context=data)
 
 
-def categories(request, cat_id):
-    return HttpResponse(f"<h1>Статьи по категориям</h1> категория {cat_id}")
+def add_page(request):
+    return HttpResponse('Добавить страницу')
 
 
-def year_archive(request, year):
-    if year > 2024:
-        # raise Http404()
-        uri = reverse('categories_slug', args=['year'])
-        return redirect(uri)
-    return HttpResponse(f"<h1>Статьи по категориям</h1> Год {year}")
+def contact(request):
+    return HttpResponse('Обратная связь')
 
 
-def categories_slug(request, cat_slug):
-    return HttpResponse(f"<h1>Статьи по категориям</h1> SLUG {cat_slug}")
+def login(request):
+    return HttpResponse('Логин')
+
+
+def show_post(request, post_id):
+    return HttpResponse(f'Номер поста {post_id}')
 
 
 def handler404(request, exception):
