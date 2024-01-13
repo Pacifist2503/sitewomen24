@@ -1,45 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-It is {% now "jS F Y H:i" %}
 
-<ul>
-    <li><a href="{% url 'home' %}">Главная страница</a></li>
-    {% for m in menu %}
-        {% if not forloop.last %}
-            <li>
-                {% else %}
-            <li class="last">
-        {% endif %}
+{% block content %}
+    {% include 'women/includes/nav.html' %}
 
-    <a href="{% url m.url %}">{{ m.title }}</a>
-    </li>
+    <h1>{{ title }}</h1>
+    {% for p in posts %}
+        <ul>
+            {% if p.is_published %}
+                <li>
+                    <p>{{ p.title }}</p>
+                    <p>{{ p.content }}</p>
+                    <a href="{% url 'show_post' p.id %}">Читать пост</a>
+                    {% if not forloop.last %}
+                        <hr>
+                    {% endif %}
+                </li>
+            {% endif %}
+        </ul>
     {% endfor %}
-</ul>
-
-<h1>{{ title }}</h1>
-
-{% for p in posts %}
-    <ul>
-        {% if p.is_published %}
-            <li>
-                <p>{{ p.title }}</p>
-                <p>{{ p.content }}</p>
-                <a href="{% url 'show_post' p.id %}">Читать пост</a>
-                {% if not forloop.last %}
-                    <hr>
-                {% endif %}
-            </li>
-        {% endif %}
-    </ul>
+    {% include 'women/includes/nav.html' %}
+{% endblock %}
 
 
-{% endfor %}
-
-</body>
-</html>
