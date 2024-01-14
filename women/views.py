@@ -15,11 +15,18 @@ data_db = [
     {'id': 4, 'title': 'Пугачева', 'content': 'Пугачева', 'is_published': True},
 ]
 
+cats_db = [
+    {'id': 1, 'name': 'Актрисы'},
+    {'id': 2, 'name': 'Певицы'},
+    {'id': 3, 'name': 'Спортсменки'},
+]
+
 
 def index(request):
     data = {'menu': menu,
             'title': 'Главная страница',
-            'posts': data_db}
+            'posts': data_db,
+            'catselected': 0}
     return render(request, 'women/index.html', context=data)
 
 
@@ -44,6 +51,13 @@ def login(request):
 
 def show_post(request, post_id):
     return HttpResponse(f'Номер поста {post_id}')
+
+
+def show_category(request, cat_id):
+    data = {'menu': menu,
+            'title': 'Отображение по рубрикам',
+            'catselected1': cat_id}
+    return render(request, 'women/show_cats.html', context=data)
 
 
 def handler404(request, exception):

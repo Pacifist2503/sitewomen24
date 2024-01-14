@@ -1,4 +1,7 @@
 {% load static %}
+{% load women_tags %}
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -35,15 +38,23 @@
                     <!-- Sidebar слева -->
                     <td valign="top" class="left-chapters">
                         <ul id="leftchapters">
-                            <li class="selected">Все категории</li>
-                            <li><a href="#">Актрисы</a></li>
-                            <li><a href="#">Певицы</a></li>
-                            <li><a href="#">Спортсменки</a></li>
-                            <li class="share">
+
+{#                            {% if catselected == 0 or catselected is None %}#}
+                            {% if catselected == 0 %}
+                                <li class="selected">Все категории</li>
+                            {% else %}
+                                <li class="selected"><a href="{% url 'home' %}">Все категории</a></li>
+                            {% endif %}
+
+                            {#                            {% get_categories as categories %}#}
+                            {% show_categories catselected1 %}
+
+
+                            <li class="shape">
                                 <p>Наш канал</p>
                                 <a class="share-yt"
                                    href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists"
-                                   target="_blank" rel="nofollow"></a>
+                                   target="_blank" rel="nofollow">ютубе</a>
                             </li>
                         </ul>
                     </td>
