@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "women.apps.WomenConfig"
+    'django_extensions',
+    'women.apps.WomenConfig',
 ]
 
 MIDDLEWARE = [
