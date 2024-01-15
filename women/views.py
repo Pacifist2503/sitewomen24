@@ -2,18 +2,14 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from women.models import Women
+
 menu = [{'title': 'О сайте', 'url': 'about'},
         {'title': 'Добавить статью', 'url': 'add_page'},
         {'title': 'Обратная связь', 'url': 'contact'},
         {'title': 'Войти', 'url': 'login'},
         ]
 
-data_db = [
-    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
-    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
-    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
-    {'id': 4, 'title': 'Пугачева', 'content': 'Пугачева', 'is_published': True},
-]
 
 cats_db = [
     {'id': 1, 'name': 'Актрисы'},
@@ -23,17 +19,17 @@ cats_db = [
 
 
 def index(request):
+    posts = Women.objects.filter(is_published=1)
     data = {'menu': menu,
             'title': 'Главная страница',
-            'posts': data_db,
+            'posts': posts,
             'catselected': 0}
     return render(request, 'women/index.html', context=data)
 
 
 def about(request):
     data = {'menu': menu,
-            'title': 'О сайте',
-            'posts': data_db}
+            'title': 'О сайте'}
     return render(request, 'women/about.html', context=data)
 
 
@@ -49,8 +45,12 @@ def login(request):
     return HttpResponse('Логин')
 
 
-def show_post(request, post_id):
-    return HttpResponse(f'Номер поста {post_id}')
+def show_post(request, post_slug):
+    post = Women.objects.get(slug=post_slug)
+    data = {'menu': menu,
+            'title': post.title,
+            'post': post}
+    return render(request, 'women/post.html', context=data)
 
 
 def show_category(request, cat_id):

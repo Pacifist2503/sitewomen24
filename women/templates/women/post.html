@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ post.title }}
+{{ post.content|linebreaks }}
+    {% if post.photo %}
+        <img src="{{ post.photo.url }}" alt="">
+    {% endif %}
+{% endblock %}
