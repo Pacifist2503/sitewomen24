@@ -1,6 +1,7 @@
 from django import template
 
 from women import views
+from women.models import Category
 
 register = template.Library()
 
@@ -12,7 +13,8 @@ def get_categories():
 
 @register.inclusion_tag("women/list_categories.html")
 def show_categories(cat_selected=0):
+    categories = Category.objects.all()
     return {
         "catselected": cat_selected,
-        "cats": views.cats_db
+        "cats": categories
     }

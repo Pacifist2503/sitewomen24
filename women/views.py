@@ -1,21 +1,14 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from women.models import Women
+from women.models import Women, Category
 
 menu = [{'title': 'О сайте', 'url': 'about'},
         {'title': 'Добавить статью', 'url': 'add_page'},
         {'title': 'Обратная связь', 'url': 'contact'},
         {'title': 'Войти', 'url': 'login'},
         ]
-
-
-cats_db = [
-    {'id': 1, 'name': 'Актрисы'},
-    {'id': 2, 'name': 'Певицы'},
-    {'id': 3, 'name': 'Спортсменки'},
-]
 
 
 def index(request):
@@ -46,17 +39,20 @@ def login(request):
 
 
 def show_post(request, post_slug):
-    post = Women.objects.get(slug=post_slug)
+    post = get_object_or_404(Women, slug=post_slug)
     data = {'menu': menu,
             'title': post.title,
             'post': post}
     return render(request, 'women/post.html', context=data)
 
 
-def show_category(request, cat_id):
+def show_category(request, cat_slug):
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Women.published.filter(cat_id=category.pk)
     data = {'menu': menu,
-            'title': 'Отображение по рубрикам',
-            'catselected1': cat_id}
+            'title': f'Рубрика: {category.name}',
+            'catselected1': cat_slug,
+            'post_cat': posts}
     return render(request, 'women/show_cats.html', context=data)
 
 
