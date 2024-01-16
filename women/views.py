@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from women.models import Women, Category
+from women.models import Women, Category, TagPost
 
 menu = [{'title': 'О сайте', 'url': 'about'},
         {'title': 'Добавить статью', 'url': 'add_page'},
@@ -54,6 +54,17 @@ def show_category(request, cat_slug):
             'catselected1': cat_slug,
             'post_cat': posts}
     return render(request, 'women/show_cats.html', context=data)
+
+
+def show_tag_postlist(request, tag_slug):
+    tag = get_object_or_404(TagPost, slug=tag_slug)
+    posts = tag.posts_tag.filter(is_published=Women.Status.PUBLISHED)
+
+    data = {'menu': menu,
+            'title': f'Рубрика по тэгам: {tag}',
+            'catselected1': None,
+            'posts': posts}
+    return render(request, 'women/index.html', context=data)
 
 
 def handler404(request, exception):

@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
 
+{% block breadcrumbs %}
+    <!-- Теги -->
+    {% with post.tags.all as tags %}
+        {% if tags %}
+            <ul class="tags-list">
+                <li>Теги:</li>
+                {% for t in tags %}
+                    <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
 {% block content %}
-{{ post.title }}
-{{ post.content|linebreaks }}
+    <h1>{{ post.title }}</h1>
+
     {% if post.photo %}
-        <img src="{{ post.photo.url }}" alt="">
+        <p><img class="img-article-left" src="{{ post.photo.url }}" alt=""></p>
     {% endif %}
+
+    {{ post.content|linebreaks }}
 {% endblock %}

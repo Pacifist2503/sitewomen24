@@ -5,7 +5,11 @@
         {% for p in posts %}
             <li>
                 <div class="article-panel">
-                    <p class="first">Категория: {{ p.cat.name }}</p>
+                    <p class="first">Категория: {{ p.cat.name }} ||</p>
+                    <p class="first">Тэги:
+                        {% for t in p.tags.all %}
+                            <a href="{{ t.get_absolute_url }}">{{ t.tag }}</a>
+                        {% endfor %} </p>
                     <p class="last">Дата: {{ p.time_updated|date:"d-m-Y H:i:s" }}</p>
                 </div>
                 <h2>{{ p.title }}</h2>

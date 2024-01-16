@@ -38,8 +38,6 @@
                     <!-- Sidebar слева -->
                     <td valign="top" class="left-chapters">
                         <ul id="leftchapters">
-
-{#                            {% if catselected == 0 or catselected is None %}#}
                             {% if catselected == 0 %}
                                 <li class="selected">Все категории</li>
                             {% else %}
@@ -56,6 +54,7 @@
                                    href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists"
                                    target="_blank" rel="nofollow">ютубе</a>
                             </li>
+                            <li>{% show_all_tag %}</li>
                         </ul>
                     </td>
                     <!-- Конец Sidebar'а -->
