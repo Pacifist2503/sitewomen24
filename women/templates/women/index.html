@@ -8,8 +8,15 @@
                     <p class="first">Категория: {{ p.cat.name }} ||</p>
                     <p class="first">Тэги:
                         {% for t in p.tags.all %}
-                            <a href="{{ t.get_absolute_url }}">{{ t.tag }}</a>
+                            <a href="{{ t.get_absolute_url }}">{{ t.tag }} ||</a>
                         {% endfor %} </p>
+                {% if p.husband %}
+                	 <p class="first">Муж: {{ p.husband }} {% if p.husband.age %} ({{ p.husband.age }} лет) {% endif %} </p>
+                    {% else %}
+                    <p class="first">Мужа нет(</p>
+                {% endif %}
+
+
                     <p class="last">Дата: {{ p.time_updated|date:"d-m-Y H:i:s" }}</p>
                 </div>
                 <h2>{{ p.title }}</h2>
