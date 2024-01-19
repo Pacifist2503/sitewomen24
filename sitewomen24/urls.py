@@ -24,3 +24,6 @@ urlpatterns = [
 ]
 
 handler404 = 'women.views.handler404'
+
+admin.site.site_header = 'Панель администрирования'
+admin.site.index_title = 'Известные женщины мира'
