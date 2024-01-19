@@ -12,15 +12,17 @@ class Women(models.Model):
         DRAFT = 0, 'Черновик'
         PUBLISHED = 1, 'Опубликовано'
 
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    content = models.TextField(blank=True)
-    time_created = models.DateTimeField(auto_now_add=True)
-    time_updated = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts_cat')
-    tags = models.ManyToManyField('TagPost', blank=True, related_name='posts_tag')
-    husband = models.ForeignKey('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women')
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Слаг')
+    content = models.TextField(blank=True, verbose_name='Текст статьи')
+    time_created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    time_updated = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
+    is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.PUBLISHED, verbose_name='Статус')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts_cat', verbose_name='Категория')
+    tags = models.ManyToManyField('TagPost', blank=True, related_name='posts_tag', verbose_name='Тэги')
+    husband = models.ForeignKey('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women',
+                                verbose_name='Муж')
 
     published = PublishedManager()
     objects = models.Manager()
@@ -41,8 +43,12 @@ class Women(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    name = models.CharField(max_length=255, db_index=True, verbose_name='Категория')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Слаг')
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
     def __str__(self):
         return self.name
@@ -68,3 +74,11 @@ class Husband(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class User(models.Model):
+    slug = models.SlugField(max_length=255, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+    password = models.CharField(max_length=100)
+    email = models.EmailField(blank=True)
+    is_staff = models.BooleanField(default=False)
