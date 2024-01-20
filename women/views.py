@@ -70,3 +70,4 @@ def show_tag_postlist(request, tag_slug):
 def handler404(request, exception):
     return HttpResponseNotFound('Страница не найдена')
 
+
