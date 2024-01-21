@@ -61,3 +61,8 @@ class TagPostAdmin(admin.ModelAdmin):
     list_display = ('id', 'tag', 'slug')
     prepopulated_fields = {'slug': ('tag',)}
     list_display_links = ('id', 'tag')
+
+
+#####
+
+#####
