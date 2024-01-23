@@ -27,7 +27,9 @@ def about(request):
 
 
 def add_page(request):
-    return HttpResponse('Добавить страницу')
+    data = {'menu': menu,
+            'title': 'Добавить страницу'}
+    return render(request, 'women/addpage.html', context=data)
 
 
 def contact(request):
