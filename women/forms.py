@@ -9,3 +9,4 @@ class AddPostForm(forms.Form):
     is_published = forms.BooleanField(required=False, label='Статус')
     cat = forms.ModelChoiceField(queryset=Category.objects.all(), label='Категория', empty_label='Не выбрано')
     husband = forms.ModelChoiceField(queryset=Husband.objects.all(), required=False, label='Муж', empty_label='Не выбрано')
+
