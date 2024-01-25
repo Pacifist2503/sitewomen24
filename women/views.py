@@ -31,7 +31,15 @@ def add_page(request):
     if request.method == 'POST':
         form = AddPostForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
+            # print(form.cleaned_data)
+            try:
+                Women.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+
+
+
     else:
         form = AddPostForm()
     data = {'menu': menu,
@@ -79,5 +87,3 @@ def show_tag_postlist(request, tag_slug):
 
 def handler404(request, exception):
     return HttpResponseNotFound('Страница не найдена')
-
-
