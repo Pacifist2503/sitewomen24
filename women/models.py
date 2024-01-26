@@ -33,7 +33,7 @@ class Women(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_updated = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
     is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
-                                       default=Status.DRAFT, verbose_name='Статус')
+                                       default=Status.PUBLISHED, verbose_name='Статус')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts_cat', verbose_name='Категория')
     tags = models.ManyToManyField('TagPost', blank=True, related_name='posts_tag', verbose_name='Тэги')
     husband = models.ForeignKey('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women',
