@@ -44,3 +44,5 @@ class AddPostForm(forms.Form):
         if not (set(title) <= set(ALLOWED_CHARS)):
             raise ValidationError('Должны присутствовать только русские символы, дефис и пробел')
         return title
+
+###
