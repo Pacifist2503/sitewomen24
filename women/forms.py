@@ -50,6 +50,7 @@ class AddPostForm(forms.ModelForm):
                             error_messages={'required': 'Без заголовка - никак', 'min_length': 'Слишком короткий заголовок'},
                             label='Имя')
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Описание')
+
     class Meta:
         model = Women
         fields = ['title', 'slug', 'content', 'cat', 'tags', 'husband']
@@ -59,3 +60,8 @@ class AddPostForm(forms.ModelForm):
         if len(title) > 20:
             raise ValidationError('Слишком много символов')
         return title
+
+
+class UploadFileForm(forms.Form):
+    # file = forms.FileField(label='Файл')
+    file = forms.ImageField(label='Файл')
