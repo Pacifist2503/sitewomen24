@@ -29,6 +29,7 @@ class Women(models.Model):
                             validators=[MinLengthValidator(5, 'Минимум 5 символов'),
                                         MaxLengthValidator(100, message='Максимум 5 символов')]
                             )
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default='None', verbose_name='Фото', blank=True, null=True)
     content = models.TextField(blank=True, verbose_name='Текст статьи')
     time_created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_updated = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
@@ -59,7 +60,6 @@ class Women(models.Model):
     # def save(self, *args, **kwargs):
     #     self.slug = slugify(translit_to_eng(self.title))
     #     super().save(*args, **kwargs)
-
 
 
 class Category(models.Model):
@@ -99,3 +99,6 @@ class Husband(models.Model):
     def __str__(self):
         return self.name
 
+
+class UploadFiles(models.Model):
+    file = models.FileField(upload_to='uploads_model')

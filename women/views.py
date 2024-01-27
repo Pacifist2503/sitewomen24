@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import AddPostForm, UploadFileForm
 
-from women.models import Women, Category, TagPost
+from women.models import Women, Category, TagPost, UploadFiles
 
 import random
 
@@ -36,7 +36,8 @@ def about(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(form.cleaned_data['file'])
+            UploadFiles(file=form.cleaned_data['file']).save()
+            # handle_uploaded_file(form.cleaned_data['file'])
         # handle_uploaded_file(request.FILES['upload_file'])
     else:
         form = UploadFileForm()
@@ -48,7 +49,7 @@ def about(request):
 
 def add_page(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')

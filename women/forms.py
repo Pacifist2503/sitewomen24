@@ -53,7 +53,7 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = Women
-        fields = ['title', 'slug', 'content', 'cat', 'tags', 'husband']
+        fields = ['title', 'slug', 'content', 'photo', 'cat', 'tags', 'husband']
 
     def clean_title(self):
         title = self.cleaned_data['title']
