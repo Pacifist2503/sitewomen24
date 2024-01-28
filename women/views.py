@@ -1,6 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.views import View
+from django.views.generic import TemplateView
+
 from .forms import AddPostForm, UploadFileForm
 
 from women.models import Women, Category, TagPost, UploadFiles
@@ -14,13 +17,29 @@ menu = [{'title': 'О сайте', 'url': 'about'},
         ]
 
 
-def index(request):
-    posts = Women.published.all().select_related('cat', 'husband')
-    data = {'menu': menu,
-            'title': 'Главная страница',
-            'posts': posts,
-            'catselected': 0}
-    return render(request, 'women/index.html', context=data)
+# def index(request):
+#     posts = Women.published.all().select_related('cat', 'husband')
+#     data = {'menu': menu,
+#             'title': 'Главная страница',
+#             'posts': posts,
+#             'catselected': 0}
+#     return render(request, 'women/index.html', context=data)
+
+
+class HomeView(TemplateView):
+    template_name = 'women/index.html'
+    extra_context = {'menu': menu,
+                     'title': 'Главная страница',
+                     'posts': Women.published.all().select_related('cat', 'husband'),
+                     'catselected': 0}
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['menu'] = menu
+    #     context['title'] = 'Главная страница'
+    #     context['posts'] = Women.published.all().select_related('cat', 'husband')
+    #     context['catselected1'] = self.request.GET.get('cat_id')
+    #     return context
 
 
 def handle_uploaded_file(f):
@@ -47,26 +66,41 @@ def about(request):
     return render(request, 'women/about.html', context=data)
 
 
-def add_page(request):
-    if request.method == 'POST':
+# def add_page(request):
+#     if request.method == 'POST':
+#         form = AddPostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home')
+#             # try:
+#             #     Women.objects.create(**form.cleaned_data)
+#             #     return redirect('home')
+#             # except:
+#             #     form.add_error(None, 'Ошибка добавления поста')
+#     else:
+#         form = AddPostForm()
+#     data = {'menu': menu,
+#             'title': 'Добавить страницу',
+#             'form': form}
+
+
+class AddPost(View):
+    def post(self, request, *args, **kwargs):
         form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')
-            # try:
-            #     Women.objects.create(**form.cleaned_data)
-            #     return redirect('home')
-            # except:
-            #     form.add_error(None, 'Ошибка добавления поста')
+        data = {'menu': menu,
+                'title': 'Добавить страницу',
+                'form': form}
+        return render(request, 'women/addpage.html', context=data)
 
-
-
-    else:
+    def get(self, request, *args, **kwargs):
         form = AddPostForm()
-    data = {'menu': menu,
-            'title': 'Добавить страницу',
-            'form': form}
-    return render(request, 'women/addpage.html', context=data)
+        data = {'menu': menu,
+                'title': 'Добавить страницу',
+                'form': form}
+        return render(request, 'women/addpage.html', context=data)
 
 
 def contact(request):
