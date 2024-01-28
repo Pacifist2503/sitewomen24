@@ -37,8 +37,8 @@ class Women(models.Model):
                                        default=Status.PUBLISHED, verbose_name='Статус')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts_cat', verbose_name='Категория')
     tags = models.ManyToManyField('TagPost', blank=True, related_name='posts_tag', verbose_name='Тэги')
-    husband = models.ForeignKey('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women',
-                                verbose_name='Муж')
+    husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women',
+                                   verbose_name='Муж')
 
     objects = models.Manager()  # должен быть первым
     published = PublishedManager()
