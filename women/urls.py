@@ -5,14 +5,14 @@ register_converter(converters.FourDigitYearConverter, "yyyy")
 
 urlpatterns = [
     # path('', views.index, name='home'),
-    path('', views.HomeView.as_view(), name='home'),
+    path('', views.WomenHome.as_view(), name='home'),
     path('about', views.about, name='about'),
     # path('add_page', views.add_page, name='add_page'),
     path('add_page', views.AddPost.as_view(), name='add_page'),
     path('contact', views.contact, name='contact'),
     path('login', views.login, name='login'),
     path('post/<slug:post_slug>', views.show_post, name='post'),
-    path('category/<slug:cat_slug>', views.show_category, name='category'),
-    path('tags/<slug:tag_slug>', views.show_tag_postlist, name='tag'),
+    path('category/<slug:cat_slug>', views.WomenCategory.as_view(), name='category'),
+    path('tags/<slug:tag_slug>', views.WomenTag.as_view(), name='tag'),
 
 ]
