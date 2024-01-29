@@ -1,8 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView, FormView
 
 from .forms import AddPostForm, UploadFileForm
 
@@ -86,25 +86,36 @@ def about(request):
 #     data = {'menu': menu,
 #             'title': 'Добавить страницу',
 #             'form': form}
+class AddPost(FormView):
+    form_class = AddPostForm
+    template_name = 'women/addpage.html'
+    success_url = reverse_lazy('home')
+    extra_context = {
+        'menu': menu,
+        'title': 'Добавить страницу',
+    }
 
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
-class AddPost(View):
-    def post(self, request, *args, **kwargs):
-        form = AddPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        data = {'menu': menu,
-                'title': 'Добавить страницу',
-                'form': form}
-        return render(request, 'women/addpage.html', context=data)
-
-    def get(self, request, *args, **kwargs):
-        form = AddPostForm()
-        data = {'menu': menu,
-                'title': 'Добавить страницу',
-                'form': form}
-        return render(request, 'women/addpage.html', context=data)
+# class AddPost(View):
+#     def post(self, request, *args, **kwargs):
+#         form = AddPostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home')
+#         data = {'menu': menu,
+#                 'title': 'Добавить страницу',
+#                 'form': form}
+#         return render(request, 'women/addpage.html', context=data)
+#
+#     def get(self, request, *args, **kwargs):
+#         form = AddPostForm()
+#         data = {'menu': menu,
+#                 'title': 'Добавить страницу',
+#                 'form': form}
+#         return render(request, 'women/addpage.html', context=data)
 
 
 def contact(request):
