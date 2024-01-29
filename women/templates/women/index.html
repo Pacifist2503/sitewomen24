@@ -29,6 +29,8 @@
                 {% endautoescape %}
                 <div class="clear"></div>
                 <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+                <p class="link-read-post"><a href="{% url 'edit_page' p.pk %}">Править пост</a></p>
+                <p class="link-read-post"><a href="{% url 'delete_page' p.slug %}">Удалить пост</a></p>
             </li>
         {% endfor %}
     </ul>

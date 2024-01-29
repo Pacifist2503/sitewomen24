@@ -120,6 +120,16 @@ class UpdatePage(UpdateView):
     }
 
 
+class DeletePage(DeleteView):
+    model = Women
+    success_url = reverse_lazy("home")
+    template_name = 'women/women_confirm_delete.html'
+    extra_context = {
+        'menu': menu,
+        'title': 'Удалить страницу',
+    }
+
+
 # class AddPost(View):
 #     def post(self, request, *args, **kwargs):
 #         form = AddPostForm(request.POST, request.FILES)
