@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 
 from .forms import AddPostForm, UploadFileForm
 
@@ -115,12 +115,27 @@ def login(request):
     return HttpResponse('Логин')
 
 
-def show_post(request, post_slug):
-    post = get_object_or_404(Women, slug=post_slug)
-    data = {'menu': menu,
-            'title': post.title,
-            'post': post}
-    return render(request, 'women/post.html', context=data)
+# def show_post(request, post_slug):
+#     post = get_object_or_404(Women, slug=post_slug)
+#     data = {'menu': menu,
+#             'title': post.title,
+#             'post': post}
+#     return render(request, 'women/post.html', context=data)
+
+
+class ShowPost(DetailView):
+    template_name = 'women/post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['post']
+        context['menu'] = menu
+        return context
 
 
 # def show_category(request, cat_slug):
@@ -139,7 +154,7 @@ class WomenCategory(ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Women.objects.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
+        return Women.published.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,8 +162,6 @@ class WomenCategory(ListView):
         context['title'] = f'Категория - {context['post_cat'][0].cat.name}'
         context['catselected1'] = self.kwargs['cat_slug']
         return context
-
-
 
 
 # def show_tag_postlist(request, tag_slug):
@@ -168,13 +181,12 @@ class WomenTag(ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Women.objects.filter(tags__slug=self.kwargs['tag_slug']).select_related('cat')
+        return Women.published.filter(tags__slug=self.kwargs['tag_slug']).select_related('cat')
 
     def get_context_data(self, **kwargs):
-        print(self.get_queryset()[0].tags)
         context = super().get_context_data(**kwargs)
         context['menu'] = menu
-        context['title'] = f'Категория - {TagPost.objects.get(slug=self.kwargs['tag_slug'])}'
+        context['title'] = f'Тэг - {TagPost.objects.get(slug=self.kwargs['tag_slug'])}'
         # context['catselected1'] = self.kwargs['cat_slug']
         return context
 

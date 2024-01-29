@@ -11,7 +11,7 @@ urlpatterns = [
     path('add_page', views.AddPost.as_view(), name='add_page'),
     path('contact', views.contact, name='contact'),
     path('login', views.login, name='login'),
-    path('post/<slug:post_slug>', views.show_post, name='post'),
+    path('post/<slug:post_slug>', views.ShowPost.as_view(), name='post'),
     path('category/<slug:cat_slug>', views.WomenCategory.as_view(), name='category'),
     path('tags/<slug:tag_slug>', views.WomenTag.as_view(), name='tag'),
 
