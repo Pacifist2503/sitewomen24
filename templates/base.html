@@ -38,14 +38,14 @@
                     <!-- Sidebar слева -->
                     <td valign="top" class="left-chapters">
                         <ul id="leftchapters">
-                            {% if catselected == 0 %}
+                            {% if cat_selected == 0 %}
                                 <li class="selected">Все категории</li>
                             {% else %}
                                 <li class="selected"><a href="{% url 'home' %}">Все категории</a></li>
                             {% endif %}
 
                             {#                            {% get_categories as categories %}#}
-                            {% show_categories catselected1 %}
+                            {% show_categories cat_selected %}
                 
 
 

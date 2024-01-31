@@ -2,8 +2,9 @@
 
 {% block content %}
     <form method="post">{% csrf_token %}
-        <p>Вы действительно хотите удалить: "{{ object }}"?</p>
-        {{ form }}
+        <p>Вы действительно хотите удалить: "{{ post }}"?</p>
+
         <input type="submit" value="Удалить">
+        <a href="{% url 'home' %}">Отмена</a>
     </form>
 {% endblock %}

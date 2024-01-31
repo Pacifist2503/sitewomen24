@@ -44,24 +44,32 @@ class RussianValidator:
 #         if not (set(title) <= set(ALLOWED_CHARS)):
 #             raise ValidationError('Должны присутствовать только русские символы, дефис и пробел')
 #         return title
-
 class AddPostForm(forms.ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Впиши'}),
-                            error_messages={'required': 'Без заголовка - никак', 'min_length': 'Слишком короткий заголовок'},
-                            label='Имя')
-    content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Описание')
+    cat = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Категория не выбрана", label="Категории")
+    husband = forms.ModelChoiceField(queryset=Husband.objects.all(), empty_label="Не замужем", required=False,
+                                     label="Муж")
 
     class Meta:
         model = Women
-        fields = ['title', 'slug', 'content', 'photo', 'cat', 'tags', 'husband']
+        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat', 'husband', 'tags']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'content': forms.Textarea(attrs={'cols': 50, 'rows': 5}),
+            # 'slug': forms.HiddenInput(),
+        }
+        # labels = {'slug': 'URL'}
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if len(title) > 20:
-            raise ValidationError('Слишком много символов')
+        if len(title) > 50:
+            raise ValidationError("Длина превышает 50 символов")
         return title
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['slug'].required = False
+
 
 
 class UploadFileForm(forms.Form):
-    # file = forms.FileField(label='Файл')
-    file = forms.ImageField(label='Файл')
+    file = forms.ImageField(label="Файл")
