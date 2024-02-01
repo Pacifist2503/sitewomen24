@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -61,17 +62,27 @@ def handle_uploaded_file(f):
 
 
 def about(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            UploadFiles(file=form.cleaned_data['file']).save()
-            # handle_uploaded_file(form.cleaned_data['file'])
-        # handle_uploaded_file(request.FILES['upload_file'])
-    else:
-        form = UploadFileForm()
+    contact_list = Women.published.all()
+    paginator = Paginator(contact_list, 3)
+    page_number = request.GET.get('page')
+    print(page_number)
+    page_obj = paginator.get_page(page_number)
+
+    # код для загрузки файлов
+    # if request.method == 'POST':
+    #     form = UploadFileForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         UploadFiles(file=form.cleaned_data['file']).save()
+    #         # handle_uploaded_file(form.cleaned_data['file'])
+    #     # handle_uploaded_file(request.FILES['upload_file'])
+    # else:
+    #     form = UploadFileForm()
+    # код для загрузки файлов
+
     data = {'menu': menu,
             'title': 'О сайте',
-            'form': form}
+            'page_obj': page_obj
+            }
     return render(request, 'women/about.html', context=data)
 
 

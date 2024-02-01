@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
+{#{% block content %}#}
+{#    <form action="" method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
 {#        <p><input type="file" name="upload_file"></p>#}
-        <button type="submit">Отправить</button>
-    </form>
+{#        <button type="submit">Отправить</button>#}
+{#    </form>#}
+{#{% endblock %}#}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% for item in page_obj %}
+        <p>{{ item.pk }}: {{ item }}</p>
+    {% endfor %}
+
+    <nav>
+        <ul>
+            {% for p in page_obj.paginator.page_range %}
+                <li>
+                    <a href="?page={{ p }}"> {{ p }}</a>
+                </li>
+
+            {% endfor %}
+
+        </ul>
+    </nav>
+
 {% endblock %}

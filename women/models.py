@@ -6,7 +6,7 @@ from django.urls import reverse
 
 def translit_to_eng(s: str) -> str:
     d = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
-         'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'к': 'k',
+         'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k',
          'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
          'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch',
          'ш': 'sh', 'щ': 'shch', 'ь': '', 'ы': 'y', 'ъ': '', 'э': 'r', 'ю': 'yu', 'я': 'ya'}
@@ -69,7 +69,13 @@ class Women(models.Model):
         :return:
         """
         if not self.slug:
-            self.slug = slugify(translit_to_eng(self.title))
+            original_slug = slugify(translit_to_eng(self.title))
+            unique_slug = original_slug
+            counter = 1
+            while Women.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{original_slug}-{counter}"
+                counter += 1
+            self.slug = unique_slug
         super().save(*args, **kwargs)
 
 
