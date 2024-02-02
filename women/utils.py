@@ -6,6 +6,7 @@ menu = [{'title': 'О сайте', 'url': 'about'},
 
 
 class DataMixin:
+    paginate_by = 2
     title_page = None
     extra_context = {}
     cat_selected = None

@@ -11,7 +11,8 @@
                     {#                            <a href="{{ t.get_absolute_url }}">{{ t.tag }} ||</a>#}
                     {#                        {% endfor %} </p>#}
                     {% if p.husband %}
-                        <p style='margin-left: 20px;' class="first">Муж: {{ p.husband }} {% if p.husband.age %} ({{ p.husband.age }}
+                        <p style='margin-left: 20px;' class="first">Муж: {{ p.husband }} {% if p.husband.age %} (
+                            {{ p.husband.age }}
                             лет) {% endif %} </p>
                     {% else %}
                         <p style='margin-left: 20px;' class="first">Мужа нет(</p>
@@ -34,4 +35,46 @@
             </li>
         {% endfor %}
     </ul>
+{% endblock %}
+
+{% block navigation %}
+    {% if page_obj.has_other_pages %}
+        <nav class="list-pages">
+            <ul>
+                {% if page_obj.has_previous %}
+                    {% if page_obj.number > 3 %}
+                        <li class="page-num">
+                            <a href="?page=1"><<</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-num">
+                        <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                    </li>
+                {% endif %}
+
+                {% for p in paginator.page_range %}
+                    {% if page_obj.number|add:-2 <= p and page_obj.number|add:2 >= p %}
+                        {% if page_obj.number == p %}
+                            <li>{{ p }} из {{ page_obj.paginator.num_pages }}</li>
+                        {% else %}
+                            <li class="page-num">
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-num">
+                        <a href="?page={{ page_obj.next_page_number }}">></a>
+                    </li>
+                    {% if page_obj.number <= page_obj.paginator.num_pages|add:-3 %}
+                        <li class="page-num">
+                            <a href="?page={{ page_obj.paginator.num_pages }}">>></a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
 {% endblock %}

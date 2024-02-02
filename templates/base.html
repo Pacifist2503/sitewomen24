@@ -46,7 +46,6 @@
 
                             {#                            {% get_categories as categories %}#}
                             {% show_categories cat_selected %}
-                
 
 
                             <li class="shape">
@@ -70,6 +69,9 @@
                             {% endblock %}
                         </div>
                         <!-- Конец блока контента -->
+
+                        {% block navigation %}
+                        {% endblock %}
 
                     </td>
                 </tr>
