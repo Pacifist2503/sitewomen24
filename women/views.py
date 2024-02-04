@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -62,6 +64,7 @@ def handle_uploaded_file(f):
             destination.write(chunk)
 
 
+@login_required
 def about(request):
     contact_list = Women.published.all()
     paginator = Paginator(contact_list, 3)
@@ -116,7 +119,7 @@ def about(request):
 #     def form_valid(self, form):
 #         form.save()
 #         return super().form_valid(form)
-class AddPage(DataMixin, CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
     # model = Women
     # fields = '__all__'
@@ -127,6 +130,11 @@ class AddPage(DataMixin, CreateView):
     #     'menu': menu,
     #     'title': 'Добавить страницу',
     # }
+
+    def form_valid(self, form):
+        w = form.save(commit=False)
+        w.author = self.request.user
+        return super().form_valid(form)
 
 
 class UpdatePage(DataMixin, UpdateView):
