@@ -3,8 +3,14 @@ from django.db.models import Count
 
 from women import views
 from women.models import Category, TagPost
+# from women.utils import menu
 
 register = template.Library()
+
+
+# @register.simple_tag()
+# def get_menu():
+#     return menu
 
 
 @register.simple_tag()

@@ -13,11 +13,12 @@ import random
 
 from .utils import DataMixin
 
-menu = [{'title': 'О сайте', 'url': 'about'},
-        {'title': 'Добавить статью', 'url': 'add_page'},
-        {'title': 'Обратная связь', 'url': 'contact'},
-        {'title': 'Войти', 'url': 'login'},
-        ]
+
+# menu = [{'title': 'О сайте', 'url': 'about'},
+#         {'title': 'Добавить статью', 'url': 'add_page'},
+#         {'title': 'Обратная связь', 'url': 'contact'},
+#         {'title': 'Войти', 'url': 'login'},
+#         ]
 
 
 # def index(request):
@@ -79,10 +80,11 @@ def about(request):
     #     form = UploadFileForm()
     # код для загрузки файлов
 
-    data = {'menu': menu,
-            'title': 'О сайте',
-            'page_obj': page_obj
-            }
+    data = {
+        # 'menu': menu,
+        'title': 'О сайте',
+        'page_obj': page_obj
+    }
     return render(request, 'women/about.html', context=data)
 
 
@@ -139,13 +141,13 @@ class UpdatePage(DataMixin, UpdateView):
     # }
 
 
-class DeletePage(DeleteView):
+class DeletePage(DataMixin, DeleteView):
     model = Women
     success_url = reverse_lazy("home")
     # template_name = 'women/women_confirm_delete.html'
     context_object_name = 'post'
     extra_context = {
-        'menu': menu,
+        # 'menu': menu,
         'title': 'Удалить страницу',
     }
 
@@ -257,7 +259,6 @@ class WomenTag(DataMixin, ListView):
         # context['menu'] = menu
         # context['title'] = f'Тэг - {TagPost.objects.get(slug=self.kwargs['tag_slug'])}'
         # context['catselected1'] = self.kwargs['cat_slug']
-
 
 
 def handler404(request, exception):
