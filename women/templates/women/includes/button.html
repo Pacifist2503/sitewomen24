@@ -1,0 +1,7 @@
+<div class="clear">
+    <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+    {% if p.author == user or user.is_superuser %}
+        <p class="link-read-post"><a href="{% url 'edit_page' p.pk %}">Править пост</a></p>
+        <p class="link-read-post"><a href="{% url 'delete_page' p.slug %}">Удалить пост</a></p>
+    {% endif %}
+</div>

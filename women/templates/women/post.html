@@ -22,4 +22,9 @@
     {% endif %}
 
     {{ post.content|linebreaks }}
+
+    {% if post.author == user or user.is_superuser %}
+        <p class="link-read-post"><a href="{% url 'edit_page' post.pk %}">Править пост</a></p>
+        <p class="link-read-post"><a href="{% url 'delete_page' post.slug %}">Удалить пост</a></p>
+    {% endif %}
 {% endblock %}
