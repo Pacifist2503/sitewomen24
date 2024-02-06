@@ -31,11 +31,23 @@
                             <li class="last">{{ user.username }} |
                                 <form style="display:inline-block" action="{% url 'users:logout' %}" method="post">
                                     {% csrf_token %}
-                                    <button class="last" type="submit">Выход</button>
+                                    <style>
+                                        /* Скрыть границу и фон кнопки */
+                                        button[type="submit"] {
+                                            border: none;
+                                            font-size: 20px;
+                                            background: none;
+                                            padding: 0; /* Удалить отступы */
+                                            cursor: pointer; /* Изменить курсор при наведении */
+                                            color: #FDA83D; /* Установить цвет текста */
+                                            /* Дополнительные стили по вашему усмотрению */
+                                        }
+                                    </style>
+                                    <button class="last ff" type="submit">Выход</button>
                                 </form>
                             </li>
                         {% else %}
-                            <li class="last"><a href="{% url 'users:login' %}">Войти</a> | <a href="#">Зарегистрироваться</a>
+                            <li class="last"><a href="{% url 'users:login' %}">Войти</a> | <a href="{% url 'users:register' %}">Зарегистрироваться</a>
                             </li>
                         {% endif %}
 
