@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
 
 
@@ -24,7 +24,7 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'first_name', 'is_superuser', 'is_staff', 'last_name', 'password1', 'password2')
         labels = {
             'email': 'E-mail',
             'first_name': 'Имя',
@@ -64,3 +64,11 @@ class ProfileForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-input'}),
             'last_name': forms.TextInput(attrs={'class': 'form-input'})
         }
+
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label='Старый пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    new_password1 = forms.CharField(label='Новый пароль',
+                                                widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    new_password2 = forms.CharField(label='Подтверждение пароля',
+                                    widget=forms.PasswordInput(attrs={'class': 'form-input'}))
