@@ -126,6 +126,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     template_name = 'women/addpage.html'
     # success_url = reverse_lazy('home')
     title_page = 'Добавить страницу'
+
     # extra_context = {
     #     'menu': menu,
     #     'title': 'Добавить страницу',
@@ -183,8 +184,15 @@ def contact(request):
     return HttpResponse('Обратная связь')
 
 
-def login(request):
-    return HttpResponse('Логин')
+class Contact(DataMixin, TemplateView):
+    template_name = 'women/contact.html'
+    extra_context = {
+        'title': 'Контакты'
+    }
+
+
+# def login(request):
+#     return HttpResponse('Логин')
 
 
 # def show_post(request, post_slug):

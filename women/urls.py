@@ -9,8 +9,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     # path('add_page', views.add_page, name='add_page'),
     path('add_page/', views.AddPage.as_view(), name='add_page'),
-    path('contact/', views.contact, name='contact'),
-    path('login/', views.login, name='login'),
+    path('contact/', views.Contact.as_view(), name='contact'),
+
     path('post/<slug:post_slug>', views.ShowPost.as_view(), name='post'),
     path('category/<slug:cat_slug>', views.WomenCategory.as_view(), name='category'),
     path('tags/<slug:tag_slug>', views.WomenTag.as_view(), name='tag'),
