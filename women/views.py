@@ -180,8 +180,8 @@ class DeletePage(DataMixin, DeleteView):
 #         return render(request, 'women/addpage.html', context=data)
 
 
-def contact(request):
-    return HttpResponse('Обратная связь')
+# def contact(request):
+#     return HttpResponse('Обратная связь')
 
 
 class Contact(DataMixin, TemplateView):

@@ -6,11 +6,28 @@
         {% csrf_token %}
         {#        {{ form.as_p }}#}
         <div class="form-error">{{ form.non_field_errors }}</div>
-        {% for f in form %}
-            <p><label class="form-label"
-                      for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
-            <div class="form-error">{{ f.errors }}</div>
+        {% for field in form %}
+            {% if field.name == 'photo' %}
+                {% if form.instance.photo %}
+                    <label class="form-label" for="{{ field.id_for_label }}">Current Photo:</label>
+                    <img src="{{ form.instance.photo.url }}" alt="Current Photo" class="thumbnail">
+                    <br>
+                {% endif %}
+                <label class="form-label" for="{{ field.id_for_label }}">New Photo:</label>
+                {{ field }}
+                <style>
+                    .thumbnail {
+                        max-width: 200px; /* Установите желаемую максимальную ширину */
+                        max-height: 200px; /* Установите желаемую максимальную высоту */
+                    }
+                </style>
+
+            {% else %}
+                <p><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}</p>
+                <div class="form-error">{{ field.errors }}</div>
+            {% endif %}
         {% endfor %}
+
         <p>
             <button type="submit">Отправить</button>
         </p>
