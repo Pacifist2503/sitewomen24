@@ -141,7 +141,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
 class UpdatePage(DataMixin, UpdateView):
     model = Women
     fields = ['title', 'content', 'tags', 'photo', 'is_published', 'cat']
-    template_name = 'women/addpage.html'
+    template_name = 'women/editpage.html'
     success_url = reverse_lazy('home')
     title_page = 'Править страницу'
     # extra_context = {
