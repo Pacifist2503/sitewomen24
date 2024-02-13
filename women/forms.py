@@ -45,6 +45,13 @@ class RussianValidator:
 #             raise ValidationError('Должны присутствовать только русские символы, дефис и пробел')
 #         return title
 class AddPostForm(forms.ModelForm):
+    title = forms.CharField(max_length=255,
+                            min_length=5,
+                            label='Заголовок',
+                            widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Впиши'}),
+                            validators=[RussianValidator()],
+                            error_messages={'required': 'Без заголовка - никак',
+                                            'min_length': 'Слишком короткий заголовок'})
     cat = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Категория не выбрана", label="Категории")
     husband = forms.ModelChoiceField(queryset=Husband.objects.all(), empty_label="Не замужем", required=False,
                                      label="Муж")
@@ -68,7 +75,6 @@ class AddPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['slug'].required = False
-
 
 
 class UploadFileForm(forms.Form):

@@ -125,12 +125,12 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     # fields = '__all__'
     template_name = 'women/addpage.html'
     # success_url = reverse_lazy('home')
-    title_page = 'Добавить страницу'
+    # title_page = 'Добавить страницу'
 
-    # extra_context = {
+    extra_context = {
     #     'menu': menu,
-    #     'title': 'Добавить страницу',
-    # }
+        'title': 'Добавить страницу',
+    }
 
     def form_valid(self, form):
         w = form.save(commit=False)
@@ -143,11 +143,11 @@ class UpdatePage(DataMixin, UpdateView):
     fields = ['title', 'content', 'tags', 'photo', 'is_published', 'cat']
     template_name = 'women/editpage.html'
     success_url = reverse_lazy('home')
-    title_page = 'Править страницу'
-    # extra_context = {
+    # title_page = 'Править страницу'
+    extra_context = {
     #     'menu': menu,
-    #     'title': 'Править страницу',
-    # }
+        'title': 'Править страницу',
+    }
 
 
 class DeletePage(DataMixin, DeleteView):
@@ -155,6 +155,7 @@ class DeletePage(DataMixin, DeleteView):
     success_url = reverse_lazy("home")
     # template_name = 'women/women_confirm_delete.html'
     context_object_name = 'post'
+    # title_page = 'Удалить страницу'
     extra_context = {
         # 'menu': menu,
         'title': 'Удалить страницу',

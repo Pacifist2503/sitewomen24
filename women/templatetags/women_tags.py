@@ -19,11 +19,11 @@ def get_categories():
 
 
 @register.inclusion_tag("women/list_categories.html")
-def show_categories(cat_selected=0):
+def show_categories(cat_selected=None):
     # categories = Category.objects.all()
     categories = Category.objects.annotate(total_posts=Count('posts_cat')).filter(total_posts__gt=0)
     return {
-        "catselected": cat_selected,
+        "cat_selected": cat_selected,
         "cats": categories
     }
 
