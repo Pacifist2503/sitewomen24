@@ -9,11 +9,11 @@
         {% for field in form %}
             {% if field.name == 'photo' %}
                 {% if form.instance.photo %}
-                    <label class="form-label" for="{{ field.id_for_label }}">Current Photo:</label>
+                    <label class="form-label" for="{{ field.id_for_label }}">Текущее Photo:</label>
                     <img src="{{ form.instance.photo.url }}" alt="Current Photo" class="thumbnail">
                     <br>
                 {% endif %}
-                <label class="form-label" for="{{ field.id_for_label }}">New Photo:</label>
+                <label class="form-label" for="{{ field.id_for_label }}">Новое Photo:</label>
                 {{ field }}
                 <style>
                     .thumbnail {
