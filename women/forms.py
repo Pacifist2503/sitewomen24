@@ -64,7 +64,8 @@ class AddPostForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'cols': 50, 'rows': 5}),
             # 'slug': forms.HiddenInput(),
         }
-        # labels = {'slug': 'URL'}
+        labels = {'slug': 'URL',
+                  'photo': 'Фотография'}
 
     def clean_title(self):
         title = self.cleaned_data['title']
