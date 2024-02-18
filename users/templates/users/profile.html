@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load women_tags %}
 
 {% block content %}
     <h1>Профиль</h1>
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
+        <div>Загруженные файлы:</div>
         {% if user.files.all %}
             <ul>
                 {% for file in user.files.all %}
-                    <li><a href="{{ file.file.url }}">{{ file.file.name }}</a></li>
+
+                    <li><a href="{{ file.file.url }}">{{ file.file.name|last_part:"/"}}</a></li>
                 {% endfor %}
             </ul>
         {% else %}

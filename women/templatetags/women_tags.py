@@ -3,6 +3,7 @@ from django.db.models import Count
 
 from women import views
 from women.models import Category, TagPost
+
 # from women.utils import menu
 
 register = template.Library()
@@ -31,3 +32,9 @@ def show_categories(cat_selected=None):
 @register.inclusion_tag("women/list_tags.html")
 def show_all_tag():
     return {"tags": TagPost.objects.annotate(total_posts=Count('posts_tag')).filter(total_posts__gt=0)}
+
+
+@register.filter()
+def last_part(value, splitter):
+    parts = value.split(splitter)
+    return parts[-1] if parts else ''
