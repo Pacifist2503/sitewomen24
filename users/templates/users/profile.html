@@ -5,6 +5,15 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
+        {% if user.files.all %}
+            <ul>
+                {% for file in user.files.all %}
+                    <li><a href="{{ file.file.url }}">{{ file.file.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No files uploaded yet.</p>
+        {% endif %}
         {% for f in form %}
             <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
             <div class="form-error">{{ f.error }}</div>

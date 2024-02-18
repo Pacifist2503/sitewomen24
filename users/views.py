@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
+from women.models import UploadFiles
 from .forms import LoginUserForm, RegisterUserForm, ProfileForm, UserPasswordChangeForm
 
 

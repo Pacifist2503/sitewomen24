@@ -95,8 +95,7 @@ def loadfile(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            ft = (UploadFiles(file=form.cleaned_data['file']))
-            ft.save()
+            UploadFiles.create(file=form.cleaned_data['file'], author=request.user)
     else:
         form = UploadFileForm()
     data = {

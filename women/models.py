@@ -41,7 +41,8 @@ class Women(models.Model):
     tags = models.ManyToManyField('TagPost', blank=True, related_name='posts_tag', verbose_name='Тэги')
     husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women',
                                    verbose_name='Муж')
-    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, default=None, related_name='posts')
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, default=None,
+                               related_name='posts')
 
     objects = models.Manager()  # должен быть первым
     published = PublishedManager()
@@ -120,7 +121,18 @@ class Husband(models.Model):
         return self.name
 
 
+def user_directory_path(instance, filename):
+    # Файл будет загружен в MEDIA_ROOT/uploads/<username>/<filename>
+    return f'uploads/{instance.author.username}/{filename}'
+
+
 class UploadFiles(models.Model):
-    file = models.FileField(upload_to='uploads_model')
+    file = models.FileField(upload_to=user_directory_path)
     author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, default=None,
                                related_name='files')
+
+    @classmethod
+    def create(cls, file, author):
+        upload_file = cls(file=file, author=author)
+        upload_file.save()
+        return upload_file
