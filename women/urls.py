@@ -7,6 +7,7 @@ urlpatterns = [
     # path('', views.index, name='home'),
     path('', views.WomenHome.as_view(), name='home'),
     path('about/', views.about, name='about'),
+    path('loadfile/', views.loadfile, name='loadfile'),
     # path('add_page', views.add_page, name='add_page'),
     path('add_page/', views.AddPage.as_view(), name='add_page'),
     path('contact/', views.Contact.as_view(), name='contact'),

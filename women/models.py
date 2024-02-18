@@ -122,3 +122,5 @@ class Husband(models.Model):
 
 class UploadFiles(models.Model):
     file = models.FileField(upload_to='uploads_model')
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, default=None,
+                               related_name='files')

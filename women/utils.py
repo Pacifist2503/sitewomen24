@@ -1,6 +1,7 @@
 menu = [{'title': 'О сайте', 'url': 'about'},
         {'title': 'Добавить статью', 'url': 'add_page'},
         {'title': 'Обратная связь', 'url': 'contact'},
+        {'title': 'Загрузить файл', 'url': 'loadfile'},
         # {'title': 'Войти', 'url': 'login'},
         ]
 

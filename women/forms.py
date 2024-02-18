@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
 from django.utils.deconstruct import deconstructible
-
+from django.core.validators import FileExtensionValidator
 from .models import Category, Husband, Women
 
 
@@ -79,4 +79,4 @@ class AddPostForm(forms.ModelForm):
 
 
 class UploadFileForm(forms.Form):
-    file = forms.ImageField(label="Файл")
+    file = forms.FileField(label="Файл", validators=[FileExtensionValidator(allowed_extensions=['fds'])])

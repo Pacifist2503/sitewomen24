@@ -91,6 +91,21 @@ def about(request):
     return render(request, 'women/about.html', context=data)
 
 
+def loadfile(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            ft = (UploadFiles(file=form.cleaned_data['file']))
+            ft.save()
+    else:
+        form = UploadFileForm()
+    data = {
+        # 'menu': menu,
+        'title': 'Загрузить файл',
+        'form': form
+    }
+    return render(request, 'women/loadfile.html', context=data)
+
 # def add_page(request):
 #     if request.method == 'POST':
 #         form = AddPostForm(request.POST, request.FILES)
