@@ -123,7 +123,7 @@ class Husband(models.Model):
 
 def user_directory_path(instance, filename):
     # Файл будет загружен в MEDIA_ROOT/uploads/<username>/<filename>
-    return f'uploads/{instance.author.username}/{filename}'
+    return f'uploads/{instance.author.pk}/{filename}'
 
 
 class UploadFiles(models.Model):
