@@ -105,6 +105,7 @@ def loadfile(request):
     }
     return render(request, 'women/loadfile.html', context=data)
 
+
 # def add_page(request):
 #     if request.method == 'POST':
 #         form = AddPostForm(request.POST, request.FILES)
@@ -142,7 +143,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     # title_page = 'Добавить страницу'
 
     extra_context = {
-    #     'menu': menu,
+        #     'menu': menu,
         'title': 'Добавить страницу',
     }
 
@@ -159,7 +160,7 @@ class UpdatePage(DataMixin, UpdateView):
     success_url = reverse_lazy('home')
     # title_page = 'Править страницу'
     extra_context = {
-    #     'menu': menu,
+        #     'menu': menu,
         'title': 'Править страницу',
     }
 
