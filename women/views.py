@@ -264,6 +264,7 @@ class WomenCategory(DataMixin, ListView):
                                       )
 
 
+
 # def show_tag_postlist(request, tag_slug):
 #     tag = get_object_or_404(TagPost, slug=tag_slug)
 #     posts = tag.posts_tag.filter(is_published=Women.Status.PUBLISHED).select_related('cat')
