@@ -234,7 +234,6 @@ class ShowPost(DataMixin, DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
 
-
 # def show_category(request, cat_slug):
 #     category = get_object_or_404(Category, slug=cat_slug)
 #     posts = Women.published.filter(cat_id=category.pk).select_related('cat')

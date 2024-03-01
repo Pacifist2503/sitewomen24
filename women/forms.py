@@ -37,8 +37,7 @@ class RussianValidator:
 #     cat = forms.ModelChoiceField(queryset=Category.objects.all(), label='Категория', empty_label='Категория не выбрана')
 #     husband = forms.ModelChoiceField(queryset=Husband.objects.all(), required=False, label='Муж',
 #                                      empty_label='Не выбрано')
-#
-#     def clean_title(self):
+##     def clean_title(self):
 #         title = self.cleaned_data['title']
 #         ALLOWED_CHARS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789- "
 #         if not (set(title) <= set(ALLOWED_CHARS)):
