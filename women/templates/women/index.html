@@ -4,6 +4,7 @@
     <ul class="list-articles">
         {% for p in posts %}
             <li>
+
                 <div class="article-panel">
                     <p class="first">Категория: {{ p.cat.name }} | автор: {{ p.author|default:'неизвестен' }}</p>
                     {#                    <p class="first">Тэги:#}
