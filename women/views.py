@@ -224,7 +224,6 @@ class ShowPost(DataMixin, DetailView):
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=context['post'])
@@ -234,6 +233,7 @@ class ShowPost(DataMixin, DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
+
 
 # def show_category(request, cat_slug):
 #     category = get_object_or_404(Category, slug=cat_slug)
@@ -262,7 +262,6 @@ class WomenCategory(DataMixin, ListView):
                                       title=f'Категория - {context['post_cat'][0].cat.name}',
                                       cat_selected=self.kwargs['cat_slug']
                                       )
-
 
 
 # def show_tag_postlist(request, tag_slug):
