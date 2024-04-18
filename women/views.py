@@ -259,7 +259,7 @@ class WomenCategory(DataMixin, ListView):
         # context['title'] = f'Категория - {context['post_cat'][0].cat.name}'
         # context['cat_selected'] = self.kwargs['cat_slug']
         return self.get_mixin_context(context,
-                                      title=f'Категория - {context['post_cat'][0].cat.name}',
+                                      title=f'Категория женщин - {context['post_cat'][0].cat.name}',
                                       cat_selected=self.kwargs['cat_slug']
                                       )
 
